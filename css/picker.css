@@ -1,0 +1,47 @@
+body {
+    margin: auto;
+    width: 90vw;
+    height: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+header {
+    height: 40px;
+    text-align: right;
+}
+
+#settings {
+    height: auto;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+}
+
+footer {
+    height: 20px;
+    text-align: right;
+}
+
+.palette {
+    height: 75vh;
+    display: flex;
+    flex-direction: row;
+    /*background-color: azure;*/
+}
+
+.colorblock {
+    height: 95%;
+    margin: 5px 0 5px 0;
+    width: 20%;
+    background-color: azure;
+}
+
+#prev {
+    height: 30px;
+    width: 30px;
+}
+
+#gensetting {
+    display: flex;
+    flex-direction: column;
+}

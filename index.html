@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="js/picker.js"></script>
+        <link rel="stylesheet" href="css/picker.css">
+        <title>Colour Palette generator</title>
+    </head>
+    <body>
+        <header>
+            <p>This is a header</p>
+        </header>
+        <div id = "settings">
+            <form id="gensetting">
+                <input type="radio" id="monochromatic" value="monochromatic" name="gentype" checked>
+                <label for="monochromatic">Monochromatic (shades of color)</label>
+                <input type="radio" id="analogous" value="analogous" name="gentype">
+                <label for="analogous">Analogous (similar colors)</label>
+            </form>
+            <div id = "colorpick">
+                <label for="H_val">H value:</label>
+                <input type="number" id="H_val" name="H value" min="0" max="359" required value="170" onchange="prevupdate ()">
+                <label for="S_val">S value:</label>
+                <input type="number" id="S_val" name="H value" min="0" max="359" required value="100" onchange="prevupdate ()">
+                <label for="L_val">L value:</label>
+                <input type="number" id="L_val" name="H value" min="0" max="359" required value="50" onchange="prevupdate ()">
+                <div id="prev"></div>
+            </div>
+            <button onclick="genpal()">Generate (picked)</button>
+            <button onclick="genrand()">Generate (random)</button>
+        </div>
+        <div class = "palette">
+            <div class = "colorblock" id="color0">
+                <p>This is 1st colour block</p>
+            </div>
+            <div class = "colorblock" id="color1">
+                <p>This is 2nd colour block</p>
+            </div>
+            <div class = "colorblock" id="color2">
+                <p>This is 3rd colour block</p>
+            </div>
+            <div class = "colorblock" id="color3">
+                <p>This is 4th colour block</p>
+            </div>
+            <div class = "colorblock" id="color4">
+                <p>This is 5th colour block</p>
+            </div>
+        </div>
+        <footer>
+            <p>Made by <a href="https://www.vebcoyote.com/contacts">Veb</a>. 2024</p>
+        </footer>
+    </body>
+</html>
