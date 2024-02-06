@@ -15,14 +15,16 @@
                 <label for="monochromatic">Monochromatic (shades of color)</label>
                 <input type="radio" id="analogous" value="analogous" name="gentype">
                 <label for="analogous">Analogous (similar colors)</label>
+                <label for="colamnt">H value:</label>
+                <input type="number" id="colamnt" name="Column amount" min="2" max="10" required value="5" onchange="colchange()">
             </form>
             <div id = "colorpick">
                 <label for="H_val">H value:</label>
-                <input type="number" id="H_val" name="H value" min="0" max="359" required value="170" onchange="prevupdate ()">
+                <input type="number" id="H_val" name="H value" min="0" max="359" required value="170" onchange="prevupdate()">
                 <label for="S_val">S value:</label>
-                <input type="number" id="S_val" name="H value" min="0" max="359" required value="100" onchange="prevupdate ()">
+                <input type="number" id="S_val" name="H value" min="0" max="100" required value="100" onchange="prevupdate()">
                 <label for="L_val">L value:</label>
-                <input type="number" id="L_val" name="H value" min="0" max="359" required value="50" onchange="prevupdate ()">
+                <input type="number" id="L_val" name="H value" min="0" max="100" required value="50" onchange="prevupdate()">
                 <div id="prev"></div>
             </div>
             <button onclick="genpal()">Generate (picked)</button>
@@ -44,8 +46,23 @@
             <div class = "colorblock" id="color4">
                 <p>This is 5th colour block</p>
             </div>
+            <div class = "colorblock" id="color5">
+                <p>This is 6th colour block</p>
+            </div>
+            <div class = "colorblock" id="color6">
+                <p>This is 7th colour block</p>
+            </div>
+            <div class = "colorblock" id="color7">
+                <p>This is 8th colour block</p>
+            </div>
+            <div class = "colorblock" id="color8">
+                <p>This is 9th colour block</p>
+            </div>
+            <div class = "colorblock" id="color9">
+                <p>This is 10th colour block</p>
+            </div>
         </div>
-        <footer>
+        <footer onload="colchange()">
             <p>Made by <a href="https://www.vebcoyote.com/contacts">Veb</a>. 2024</p>
         </footer>
     </body>

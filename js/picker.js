@@ -1,8 +1,22 @@
-//declare as array for changing clumn colours
+//declare default values
 let colout = [];
-
-//temporary - sets amount of columns
+let amntmax = 10;
 let amnt = 5;
+
+//Setup - sets amount of columns
+function colchange () {
+    amnt=parseInt(document.getElementById("colamnt").value);
+    for (let i = 0; i < (amntmax); i++) {
+        colnr = "color"+i;
+        if (i>=amnt) {
+            document.getElementById(colnr).style.display='none';
+        } else {
+            document.getElementById(colnr).style.display='';
+        };
+    };
+    genpal();
+};
+window.onload=colchange;
 
 //HSL/HSB Conversion by Klim Kielczwski
 const hsvToHsl = (h, s, v, l = v * (1 - (s / 2))) => [h, l === 0 || l === 1 ? 0 : (v - l) / Math.min(l, 1 - l), l];
@@ -11,7 +25,7 @@ const hslToHsv = (h, s, l, v = l + s * Math.min(l, 1 - l)) => [h, v === 0 ? 0 : 
 //shades of same colour; ideally should be steps in HSB space
 function monochromatic (h,s,l,n) {
     for (let i = 0; i < n; i++) {
-        let dec=(i-2)*Math.trunc(100/n);
+        let dec=(i-Math.round(n/2))*Math.trunc(100/n);
         let v = 0;
         hslToHsv (h,s,l,v);
         let sm=s+dec;
@@ -36,7 +50,7 @@ function monochromatic (h,s,l,n) {
 //Rotate H, keep S and L same - makes similar colours
 function analogous (h,s,l,n) {
     for (let i = 0; i < n; i++) {
-        let dec=(i-Math.trunc(n/2))*20;
+        let dec=(i-Math.trunc(n/2))*Math.trunc(100/n);
         let hm=h+dec;
         if (hm<0) {
             hm=hm+359;
