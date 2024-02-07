@@ -15,8 +15,9 @@
                 <label for="monochromatic">Monochromatic (shades of color)</label>
                 <input type="radio" id="analogous" value="analogous" name="gentype">
                 <label for="analogous">Analogous (similar colors)</label>
-                <label for="colamnt">H value:</label>
-                <input type="number" id="colamnt" name="Column amount" min="2" max="10" required value="5" onchange="colchange()">
+                </br>
+                <label for="colamnt" id="sliderlabel">Colours (current - 5):</label>
+                <input type="range" id="colamnt" name="Column amount" min="2" max="10" value="5" onchange="colchange()">
             </form>
             <div id = "colorpick">
                 <label for="H_val">H value:</label>

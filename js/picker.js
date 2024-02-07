@@ -6,6 +6,36 @@ let amnt = 5;
 //Setup - sets amount of columns
 function colchange () {
     amnt=parseInt(document.getElementById("colamnt").value);
+    slidLabel = document.getElementById("sliderlabel");
+    switch (amnt) {
+        case 2:
+            slidLabel.innerHTML = "Colours (current - 2):";
+            break;
+        case 3:
+            slidLabel.innerHTML = "Colours (current - 3):";
+            break;
+        case 4:
+            slidLabel.innerHTML = "Colours (current - 4):";
+            break;
+        case 5:
+            slidLabel.innerHTML = "Colours (current - 5):";
+            break;       
+        case 6:
+            slidLabel.innerHTML = "Colours (current - 6):";
+            break;
+        case 7:
+            slidLabel.innerHTML = "Colours (current - 7):";
+            break;
+        case 8:
+            slidLabel.innerHTML = "Colours (current - 8):";
+            break;       
+        case 9:
+            slidLabel.innerHTML = "Colours (current - 9):";
+            break;
+        case 10:
+            slidLabel.innerHTML = "Colours (current - 10):";
+            break;     
+    };
     for (let i = 0; i < (amntmax); i++) {
         colnr = "color"+i;
         if (i>=amnt) {
@@ -114,6 +144,9 @@ function genrand () {
     const h=Math.round((Math.random()*359));
     const s=Math.round((Math.random()*50)+50);
     const l=Math.round((Math.random()*20)+40);
+    document.getElementById("H_val").value = h;
+    document.getElementById("S_val").value = s;
+    document.getElementById("L_val").value = l;
     select (method,h,s,l,amnt);
     document.getElementById("prev").style.backgroundColor="hsl("+h+", "+s+"%, "+l+"%)";
 };
