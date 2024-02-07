@@ -40,10 +40,13 @@ function monochromatic (h,s,l,n) {
         } else {if (vm>100){
             vm=vm-100;
         }};
-        hsvToHsl (h,sm,vm,l)
-        colout[i] = "hsl("+h+", "+sm+"%, "+l+"%)";
+        hsvToHsl (h,sm,l,vm);
+        colourchange(h,sm,l,i);
+        /*colout[i] = "hsl("+h+", "+sm+"%, "+l+"%)";
         const colnr = "color"+i;
-        document.getElementById(colnr).style.backgroundColor=colout[i];
+        const tag = document.getElementById(colnr);
+        tag.style.backgroundColor=colout[i];
+        tag.innerHTML="<p>"+tag.style.backgroundColor+"</p>";*/
     };
 };
 
@@ -57,9 +60,7 @@ function analogous (h,s,l,n) {
         } else {if (hm>359){
             hm=hm-359;
         }};
-        colout[i] = "hsl("+hm+", "+s+"%, "+l+"%)";
-        const colnr = "color"+i;
-        document.getElementById(colnr).style.backgroundColor=colout[i];
+        colourchange(hm,s,l,i);
     };
 };
 
@@ -83,6 +84,20 @@ function prevupdate () {
     document.getElementById("prev").style.backgroundColor="hsl("+h+", "+s+"%, "+l+"%)";
 };
 
+//update column color+text
+function colourchange (h,s,l,i) {
+    colout[i] = "hsl("+h+", "+s+"%, "+l+"%)";
+    const colnr = "color"+i;
+    const tag = document.getElementById(colnr);
+    tag.style.backgroundColor=colout[i];
+    if (l>50) {
+        tag.style.color = "black";
+    } else {
+        tag.style.color = "white";
+    };
+    tag.innerHTML="<p>"+tag.style.backgroundColor+"</p><p>"+colout[i]+"</p>";
+}
+
 //Button to generate a palette from the given colour
 function genpal () {
     const method = document.querySelector('input[name="gentype"]:checked').value;
@@ -96,9 +111,9 @@ function genpal () {
 //Button to generate a palette at random
 function genrand () {
     const method = document.querySelector('input[name="gentype"]:checked').value;
-    const h=(Math.random()*359);
-    const s=(Math.random()*50)+50;
-    const l=(Math.random()*20)+40;
+    const h=Math.round((Math.random()*359));
+    const s=Math.round((Math.random()*50)+50);
+    const l=Math.round((Math.random()*20)+40);
     select (method,h,s,l,amnt);
     document.getElementById("prev").style.backgroundColor="hsl("+h+", "+s+"%, "+l+"%)";
 };
