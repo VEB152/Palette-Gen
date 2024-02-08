@@ -11,10 +11,14 @@
         </header>
         <div id = "settings">
             <form id="gensetting">
-                <input type="radio" id="monochromatic" value="monochromatic" name="gentype" checked>
+                <!--<input type="radio" id="monochromatic" value="monochromatic" name="gentype" checked>
                 <label for="monochromatic">Monochromatic (shades of color)</label>
                 <input type="radio" id="analogous" value="analogous" name="gentype">
-                <label for="analogous">Analogous (similar colors)</label>
+                <label for="analogous">Analogous (similar colors)</label>-->
+                <select id="gentype" name="gentype">
+                    <option value="monochromatic">Monochromatic (shades of color)</option>
+                    <option value="analogous">Analogous (similar colors)</option>
+                </select>
                 </br>
                 <label for="colamnt" id="sliderlabel">Colours (current - 5):</label>
                 <input type="range" id="colamnt" name="Column amount" min="2" max="10" value="5" onchange="colchange()">

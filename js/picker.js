@@ -72,11 +72,6 @@ function monochromatic (h,s,l,n) {
         }};
         hsvToHsl (h,sm,l,vm);
         colourchange(h,sm,l,i);
-        /*colout[i] = "hsl("+h+", "+sm+"%, "+l+"%)";
-        const colnr = "color"+i;
-        const tag = document.getElementById(colnr);
-        tag.style.backgroundColor=colout[i];
-        tag.innerHTML="<p>"+tag.style.backgroundColor+"</p>";*/
     };
 };
 
@@ -130,7 +125,7 @@ function colourchange (h,s,l,i) {
 
 //Button to generate a palette from the given colour
 function genpal () {
-    const method = document.querySelector('input[name="gentype"]:checked').value;
+    let method = document.getElementById("gentype").value;
     const h=parseInt(document.getElementById("H_val").value);
     const s=parseInt(document.getElementById("S_val").value);
     const l=parseInt(document.getElementById("L_val").value);
@@ -140,7 +135,7 @@ function genpal () {
 
 //Button to generate a palette at random
 function genrand () {
-    const method = document.querySelector('input[name="gentype"]:checked').value;
+    let method = document.getElementById("gentype").value;
     const h=Math.round((Math.random()*359));
     const s=Math.round((Math.random()*50)+50);
     const l=Math.round((Math.random()*20)+40);
