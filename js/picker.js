@@ -2,6 +2,7 @@
 let colout = [];
 let amntmax = 10;
 let amnt = 5;
+let h, s, l, b;
 
 //Setup - sets amount of columns
 function colchange () {
@@ -48,29 +49,36 @@ function colchange () {
 };
 window.onload=colchange;
 
-//HSL/HSB Conversion by Klim Kielczwski
-const hsvToHsl = (h, s, v, l = v * (1 - (s / 2))) => [h, l === 0 || l === 1 ? 0 : (v - l) / Math.min(l, 1 - l), l];
-const hslToHsv = (h, s, l, v = l + s * Math.min(l, 1 - l)) => [h, v === 0 ? 0 : 2 * (1 - (l / v)), v];
+function hsbToHsl(sl, bl) {
+    const x = (200 - sl) * bl / 100;
+    sl = x === 0 || x === 200 ? 0 : Math.round(sl * bl / (x <= 100 ? x : 200 - x)),
+    l = Math.round(x / 2);
+}
+
+function hslToHsb(sb, lb) {
+    const x = sb * (lb < 50 ? l : 100 - lb);
+    b = lb + (x / 100);
+    s = lb === 0 ? s : 2 * x / b;
+}
 
 //shades of same colour; ideally should be steps in HSB space
 function monochromatic (h,s,l,n) {
     for (let i = 0; i < n; i++) {
         let dec=(i-Math.round(n/2))*Math.trunc(100/n);
-        let v = 0;
-        hslToHsv (h,s,l,v);
+        hslToHsb(s, l);
         let sm=s+dec;
         if (sm<0) {
             sm=sm+100;
         } else {if (sm>100){
             sm=sm-100;
         }};
-        let vm=v+dec;
-        if (vm<0) {
-            vm=vm+100;
-        } else {if (vm>100){
-            vm=vm-100;
+        let bm=b+dec;
+        if (bm<0) {
+            bm=bm+100;
+        } else {if (bm>100){
+            bm=bm-100;
         }};
-        hsvToHsl (h,sm,l,vm);
+        hsbToHsl (sm,bm);
         colourchange(h,sm,l,i);
     };
 };
@@ -89,6 +97,53 @@ function analogous (h,s,l,n) {
     };
 };
 
+function complementary (h,s,l,n){
+    if (n>6) {
+        document.getElementById("colamnt").value = 6;
+        colchange();
+    };
+    for (let i=0; i<n; i++){
+        hslToHsb (s,l);
+        let dec = 20;
+        switch ((i+1)%2){
+            case 0:
+                hm=h+180;
+                if (i>2) {
+                    sm=s-dec*(((i+1)/2)+1);
+                    bm=b-dec*(((i+1)/2)+1);
+                    console.log("column nr."+i+" h"+h+" s"+s+" l"+l+" b"+b);
+                } else {
+                    sm=s;
+                    bm=b;
+                }
+
+                break;
+            case 1:
+                hm=h
+                if (i>2) {
+                    sm=s-dec*((i/2)+1);
+                    bm=b-dec*((i/2)+1);
+                } else {
+                    sm=s;
+                    bm=b;
+                }
+                break;
+        };
+        if (sm<0) {
+            sm=sm+100;
+        } else {if (sm>100){
+            sm=sm-100;
+        }};
+        if (bm<0) {
+            bm=bm+100;
+        } else {if (bm>100){
+            bm=bm-100;
+        }};
+        hsbToHsl(sm,bm);
+        colourchange(hm,sm,l,i);
+    };    
+};
+
 //Selects which mode to use; update to use dropdown later
 function select (mode,h,s,l,n) {
     switch (mode) {
@@ -97,6 +152,9 @@ function select (mode,h,s,l,n) {
         break;
         case "analogous":
             analogous(h,s,l,n);
+        break;
+        case "complementary":
+            complementary(h,s,l,n);
         break;
     };
 };
