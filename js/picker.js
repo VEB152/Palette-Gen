@@ -92,22 +92,19 @@ function complementary (h,s,l,n){
 //Split complementary - rotate H by 150 and 210 degrees
 function split (h,s,l,n){
     for (let i = 0; i < n; i++) {
-        let shadingStep=Math.trunc(i/3)*Math.trunc(100/n);
+        let shadingStep=Math.trunc(i/3)*Math.trunc(200/n);
         newColour = hsl_to_hsb(h, s, l);
         switch (i%3) {
             case 1:
                 hm=newColour.h+150;
                 hm%=360;
-                console.log(h, hm);
                 break;
             case 2:
                 hm=newColour.h+210;
                 hm%=360;
-                console.log(h, hm);
                 break;
             case 0:
                 hm=newColour.h;
-                console.log(h, hm);
                 break;
         };
         sm=newColour.s-shadingStep;
