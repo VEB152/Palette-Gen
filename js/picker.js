@@ -49,45 +49,47 @@ function colchange () {
 };
 window.onload=colchange;
 
-function hsbToHsl(sl, bl) {
-    const x = (200 - sl) * bl / 100;
-    sl = x === 0 || x === 200 ? 0 : Math.round(sl * bl / (x <= 100 ? x : 200 - x)),
-    l = Math.round(x / 2);
+//color conversion, LukeForrest@StackOverflow
+function hsb_to_hsl(h, s, b) {
+    const x = (200 - s) * b / 100;
+    return {
+        h,
+        s: x === 0 || x === 200 ? 0 : Math.round(s * b / (x <= 100 ? x : 200 - x)),
+        l: Math.round(x / 2)
+    };
 }
 
-function hslToHsb(sb, lb) {
-    const x = sb * (lb < 50 ? l : 100 - lb);
-    b = lb + (x / 100);
-    s = lb === 0 ? s : 2 * x / b;
+function hsl_to_hsb(h, s, l) {
+    const x = s * (l < 50 ? l : 100 - l);
+    const b = l + (x / 100);
+    return {
+        h,
+        s: l === 0 ? s : 2 * x / b,
+        b
+    };
 }
 
 //shades of same colour; ideally should be steps in HSB space
 function monochromatic (h,s,l,n) {
     for (let i = 0; i < n; i++) {
-        let dec=(i-Math.round(n/2))*Math.trunc(100/n);
-        hslToHsb(s, l);
-        let sm=s+dec;
-        if (sm<0) {
-            sm=sm+100;
-        } else {if (sm>100){
-            sm=sm-100;
-        }};
-        let bm=b+dec;
-        if (bm<0) {
-            bm=bm+100;
-        } else {if (bm>100){
-            bm=bm-100;
-        }};
-        hsbToHsl (sm,bm);
-        colourchange(h,sm,l,i);
+        let shadingStep=(i)*Math.trunc(90/n);
+        newColour = hsl_to_hsb(h, s, l);
+        let sm=newColour.s-shadingStep;
+        let bm=newColour.b-shadingStep;
+        sm<0? sm+=100 : sm=sm;
+        bm<0? bm+=100 : bm=bm;
+        sm %= 101;
+        bm %= 101;
+        outColour = hsb_to_hsl(h,sm,bm);
+        colourchange(outColour.h, outColour.s, outColour.l, i);
     };
 };
 
 //Rotate H, keep S and L same - makes similar colours
 function analogous (h,s,l,n) {
     for (let i = 0; i < n; i++) {
-        let dec=(i-Math.trunc(n/2))*Math.trunc(100/n);
-        let hm=h+dec;
+        let shadingStep=(i-Math.trunc(n/2))*Math.trunc(100/n);
+        let hm=h+shadingStep;
         if (hm<0) {
             hm=hm+359;
         } else {if (hm>359){
@@ -98,50 +100,26 @@ function analogous (h,s,l,n) {
 };
 
 function complementary (h,s,l,n){
-    if (n>6) {
+    /*if (n>6) {
         document.getElementById("colamnt").value = 6;
         colchange();
+    };*/
+    for (let i = 0; i < n; i++) {
+        let shadingStep=Math.trunc(i/2)*Math.trunc(100/n);
+        let sm, bm;
+        newColour = hsl_to_hsb(h, s, l);
+        h=newColour.h+180;
+        sm=newColour.s-shadingStep;
+        bm=newColour.b-shadingStep;
+        h %= 360;
+        sm %= 101;
+        bm %= 101;
+        (sm<0)?sm+=100:sm=sm;
+        (bm<0)?bm+=100:bm=bm;
+        outColour = hsb_to_hsl(h,sm,bm);
+        console.log(outColour.h, outColour.s, outColour.l, i);
+        colourchange(outColour.h, outColour.s, outColour.l, i);
     };
-    for (let i=0; i<n; i++){
-        hslToHsb (s,l);
-        let dec = 20;
-        switch ((i+1)%2){
-            case 0:
-                hm=h+180;
-                if (i>2) {
-                    sm=s-dec*(((i+1)/2)+1);
-                    bm=b-dec*(((i+1)/2)+1);
-                    console.log("column nr."+i+" h"+h+" s"+s+" l"+l+" b"+b);
-                } else {
-                    sm=s;
-                    bm=b;
-                }
-
-                break;
-            case 1:
-                hm=h
-                if (i>2) {
-                    sm=s-dec*((i/2)+1);
-                    bm=b-dec*((i/2)+1);
-                } else {
-                    sm=s;
-                    bm=b;
-                }
-                break;
-        };
-        if (sm<0) {
-            sm=sm+100;
-        } else {if (sm>100){
-            sm=sm-100;
-        }};
-        if (bm<0) {
-            bm=bm+100;
-        } else {if (bm>100){
-            bm=bm-100;
-        }};
-        hsbToHsl(sm,bm);
-        colourchange(hm,sm,l,i);
-    };    
 };
 
 //Selects which mode to use; update to use dropdown later
