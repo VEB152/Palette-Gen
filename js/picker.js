@@ -90,11 +90,8 @@ function analogous (h,s,l,n) {
     for (let i = 0; i < n; i++) {
         let shadingStep=(i-Math.trunc(n/2))*Math.trunc(100/n);
         let hm=h+shadingStep;
-        if (hm<0) {
-            hm=hm+359;
-        } else {if (hm>359){
-            hm=hm-359;
-        }};
+        (hm<0)?hm+=100:hm=hm;
+        hm%=101;
         colourchange(hm,s,l,i);
     };
 };
