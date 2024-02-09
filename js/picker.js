@@ -1,45 +1,16 @@
 //declare default values
 let colout = [];
-let amntmax = 10;
-let amnt = 5;
+let maximumColumnAmount = 10;
+let columnAmount = 5;
 let h, s, l, b;
 
 //Setup - sets amount of columns
 function colchange () {
-    amnt=parseInt(document.getElementById("colamnt").value);
-    slidLabel = document.getElementById("sliderlabel");
-    switch (amnt) {
-        case 2:
-            slidLabel.innerHTML = "Colours (current - 2):";
-            break;
-        case 3:
-            slidLabel.innerHTML = "Colours (current - 3):";
-            break;
-        case 4:
-            slidLabel.innerHTML = "Colours (current - 4):";
-            break;
-        case 5:
-            slidLabel.innerHTML = "Colours (current - 5):";
-            break;       
-        case 6:
-            slidLabel.innerHTML = "Colours (current - 6):";
-            break;
-        case 7:
-            slidLabel.innerHTML = "Colours (current - 7):";
-            break;
-        case 8:
-            slidLabel.innerHTML = "Colours (current - 8):";
-            break;       
-        case 9:
-            slidLabel.innerHTML = "Colours (current - 9):";
-            break;
-        case 10:
-            slidLabel.innerHTML = "Colours (current - 10):";
-            break;     
-    };
-    for (let i = 0; i < (amntmax); i++) {
+    columnAmount=parseInt(document.getElementById("colamnt").value);
+    document.getElementById("sliderlabel").textContent = `Colours (current - ${columnAmount})`;
+    for (let i = 0; i < (maximumColumnAmount); i++) {
         colnr = "color"+i;
-        if (i>=amnt) {
+        if (i>=columnAmount) {
             document.getElementById(colnr).style.display='none';
         } else {
             document.getElementById(colnr).style.display='';
@@ -97,10 +68,6 @@ function analogous (h,s,l,n) {
 };
 
 function complementary (h,s,l,n){
-    /*if (n>6) {
-        document.getElementById("colamnt").value = 6;
-        colchange();
-    };*/
     for (let i = 0; i < n; i++) {
         let shadingStep=Math.trunc(i/2)*Math.trunc(100/n);
         let sm, bm;
@@ -154,7 +121,7 @@ function colourchange (h,s,l,i) {
         tag.style.color = "white";
     };
     tag.innerHTML="<p>"+tag.style.backgroundColor+"</p><p>"+colout[i]+"</p>";
-}
+};
 
 //Button to generate a palette from the given colour
 function genpal () {
@@ -163,7 +130,7 @@ function genpal () {
     const s=parseInt(document.getElementById("S_val").value);
     const l=parseInt(document.getElementById("L_val").value);
     document.getElementById("prev").style.backgroundColor="hsl("+h+", "+s+"%, "+l+"%)";
-    select (method,h,s,l,amnt);
+    select (method,h,s,l,columnAmount);
 };
 
 //Button to generate a palette at random
@@ -175,6 +142,6 @@ function genrand () {
     document.getElementById("H_val").value = h;
     document.getElementById("S_val").value = s;
     document.getElementById("L_val").value = l;
-    select (method,h,s,l,amnt);
+    select (method,h,s,l,columnAmount);
     document.getElementById("prev").style.backgroundColor="hsl("+h+", "+s+"%, "+l+"%)";
 };
