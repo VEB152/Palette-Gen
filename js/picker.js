@@ -72,16 +72,51 @@ function complementary (h,s,l,n){
         let shadingStep=Math.trunc(i/2)*Math.trunc(100/n);
         let sm, bm;
         newColour = hsl_to_hsb(h, s, l);
-        h=newColour.h+180;
+        if (i%2==0) {
+            hm=newColour.h;
+        } else {
+            hm=newColour.h+180;
+        }
         sm=newColour.s-shadingStep;
         bm=newColour.b-shadingStep;
-        h %= 360;
+        hm %= 360;
         sm %= 101;
         bm %= 101;
         (sm<0)?sm+=100:sm=sm;
         (bm<0)?bm+=100:bm=bm;
-        outColour = hsb_to_hsl(h,sm,bm);
-        console.log(outColour.h, outColour.s, outColour.l, i);
+        outColour = hsb_to_hsl(hm,sm,bm);
+        colourchange(outColour.h, outColour.s, outColour.l, i);
+    };
+};
+
+//Split complementary - rotate H by 150 and 210 degrees
+function split (h,s,l,n){
+    for (let i = 0; i < n; i++) {
+        let shadingStep=Math.trunc(i/3)*Math.trunc(100/n);
+        newColour = hsl_to_hsb(h, s, l);
+        switch (i%3) {
+            case 1:
+                hm=newColour.h+150;
+                hm%=360;
+                console.log(h, hm);
+                break;
+            case 2:
+                hm=newColour.h+210;
+                hm%=360;
+                console.log(h, hm);
+                break;
+            case 0:
+                hm=newColour.h;
+                console.log(h, hm);
+                break;
+        };
+        sm=newColour.s-shadingStep;
+        bm=newColour.b-shadingStep;
+        sm %= 101;
+        bm %= 101;
+        (sm<0)?sm+=100:sm=sm;
+        (bm<0)?bm+=100:bm=bm;
+        outColour = hsb_to_hsl(hm,sm,bm);
         colourchange(outColour.h, outColour.s, outColour.l, i);
     };
 };
@@ -97,6 +132,9 @@ function select (mode,h,s,l,n) {
         break;
         case "complementary":
             complementary(h,s,l,n);
+        break;
+        case "splitcomp":
+            split(h,s,l,n);
         break;
     };
 };
